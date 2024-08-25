@@ -28,12 +28,12 @@ Users should be able to:
 
 ### Screenshot
 
-![](./assets/screenshot/mobiless.png)
-![](./assets/screenshot/deskotopss.png)
+![](./public/mobiless.png)
+![](./public/desktopss.png)
 
 ### Links
 
-- Live Site URL: [https://projectlistwithcart.netlify.app/](https://projectlistwithcart.netlify.app/)
+- Live Site URL: [https://crudprofileapp.netlify.app/](https://crudprofileapp.netlify.app/)
 
 ## My process
 
