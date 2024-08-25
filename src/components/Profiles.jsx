@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SingleProfile from "./SingleProfile";
 import { useNavigate } from "react-router-dom";
+import Table from "./Table";
 
 function Profiles({ profileList, onSelectedInd, onDelete, onEdit }) {
   const [pageNum, setPageNum] = useState(1);
@@ -13,7 +14,6 @@ function Profiles({ profileList, onSelectedInd, onDelete, onEdit }) {
   const maxItemsPerPage = 5;
   const totalPage = Math.ceil(profileList.length / maxItemsPerPage);
   const start = (pageNum - 1) * maxItemsPerPage;
-  console.log(totalPage);
   const end = pageNum * maxItemsPerPage;
 
   const handleNext = () =>
@@ -24,30 +24,19 @@ function Profiles({ profileList, onSelectedInd, onDelete, onEdit }) {
   return (
     <div className="profiles-container">
       <h2>Profiles</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>S.N</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {[...profileList].slice(start, end).map((profile, index) => (
-            <SingleProfile
-              profile={profile}
-              key={index}
-              onSelectedInd={onSelectedInd}
-              onDelete={onDelete}
-              onEdit={onEdit}
-              index={index}
-            />
-          ))}
-        </tbody>
-      </table>
+
+      <Table>
+        {[...profileList].slice(start, end).map((profile, index) => (
+          <SingleProfile
+            profile={profile}
+            key={index}
+            onDelete={onDelete}
+            onEdit={onEdit}
+            index={index}
+          />
+        ))}
+      </Table>
+
       <div className="profile-btn-container">
         <button className="btn">
           <a
@@ -64,9 +53,11 @@ function Profiles({ profileList, onSelectedInd, onDelete, onEdit }) {
               Prev
             </button>
           )}
-          {profileList.length >= 5 ? (
+          {profileList.length > 5 ? (
             <button
-              className={`btn ${pageNum === totalPage && "disabled-btn"}`}
+              className={`btn ${
+                totalPage > 1 && pageNum === totalPage && "disabled-btn"
+              }`}
               onClick={handleNext}
               disabled={pageNum == totalPage}
             >

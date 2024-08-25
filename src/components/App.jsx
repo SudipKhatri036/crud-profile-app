@@ -11,7 +11,7 @@ const initialState = {
   district: "",
   province: "",
   country: "Nepal",
-  profile: undefined,
+  profile: null,
 };
 
 function App() {
@@ -19,11 +19,9 @@ function App() {
     const profileArr = JSON.parse(localStorage.getItem("profile-lists"));
     return profileArr || [];
   });
-  const [selectedIndex, setSelectedIndex] = useState(-1);
   const [selectedFormState, setSelectedFormState] = useState(null);
-  // const [profileList, setProfileList] = useLocalStorage("profile-list", [
-  //   sampleObj,
-  // ]);
+  const [editIndex, setEditIndex] = useState(null);
+
   useEffect(
     function () {
       localStorage.setItem("profile-lists", JSON.stringify(profileList));
@@ -31,32 +29,35 @@ function App() {
     [profileList]
   );
 
-  function handleSelected(index) {
-    setSelectedIndex(index);
-  }
-
-  function handleSubmit(values, action) {
-    if (selectedIndex >= 0) {
+  function handleSubmit(values, actions) {
+    if (editIndex !== null) {
       let updatedProfileList = [...profileList];
-      updatedProfileList[selectedIndex] = values;
+      updatedProfileList[editIndex] = values;
       setProfileList(updatedProfileList);
-      setSelectedIndex(-1);
-      setSelectedFormState(null);
+      setEditIndex(null);
+      setSelectedFormState(initialState);
     } else {
       setProfileList((prev) => [...prev, values]);
     }
-    action.resetForm();
+
+    actions.resetForm({
+      values: {
+        ...initialState,
+      },
+    });
   }
 
-  function handleDelete() {
-    const newProfileList = profileList.filter((_, i) => i !== selectedIndex);
+  function handleDelete(index) {
+    const newProfileList = profileList.filter((_, i) => i !== index);
     setProfileList(newProfileList);
   }
 
-  function handleEdit() {
-    if (selectedIndex >= 0) {
-      setSelectedFormState(profileList[selectedIndex] || initialState);
-    }
+  function handleEdit(index) {
+    // if (selectedIndex >= 0) {
+    //   setSelectedFormState(profileList[index] || initialState);
+    // }
+    setSelectedFormState(profileList[index]);
+    setEditIndex(index);
   }
 
   return (
@@ -72,7 +73,6 @@ function App() {
       {profileList.length ? (
         <Profiles
           profileList={profileList}
-          onSelectedInd={handleSelected}
           onDelete={handleDelete}
           onEdit={handleEdit}
         />

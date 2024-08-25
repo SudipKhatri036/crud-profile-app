@@ -134,14 +134,13 @@ function Form({ initialState, onSubmit, selectedFormState }) {
             onBlur={handleBlur}
           >
             <option>Select</option>
-
-            <option value="Province 1">Province 1</option>
-            <option value="Madhesh">Madhesh</option>
-            <option value="Bagmati">Bagmati</option>
-            <option value="Gandaki">Gandaki</option>
-            <option value="Lumbini">Lumbini</option>
-            <option value="Karnali">Karnali</option>
-            <option value="Sudurpaschim">Sudurpaschim</option>
+            {Array.from({ length: 7 }).map((_, i) => {
+              return (
+                <option key={i} value="Province ${i + 1}">
+                  Province {i + 1}
+                </option>
+              );
+            })}
           </select>
         </div>
       </div>
@@ -173,10 +172,9 @@ function Form({ initialState, onSubmit, selectedFormState }) {
             type="file"
             name="profile"
             id="profile"
-            accept="profile/png"
+            accept="image/png"
             onChange={(e) => {
-              console.log(e.target.files);
-              setFieldValue("file", e.target.files[0]);
+              setFieldValue("profile", e.currentTarget.files[0]);
             }}
             onBlur={handleBlur}
           />
@@ -185,6 +183,7 @@ function Form({ initialState, onSubmit, selectedFormState }) {
           <p className="error">{errors.profile}</p>
         ) : null}
       </div>
+
       <div className="btn-container">
         <button type="submit" className="btn">
           {selectedFormState ? "Update" : "Submit"}

@@ -150,6 +150,13 @@ tbody td {
   height: 40px;
 }
 
+.profile-png {
+  width: 50px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .name-td {
   text-transform: capitalize;
 }
@@ -244,6 +251,53 @@ td .action-btn-delete:hover {
 .full-profile-container .btn {
   margin-left: 3rem;
 }
+
 .full-profile {
   width: 90%;
+}
+
+.full-profile .profile-png {
+  width: 100px;
+  height: 80px;
+}
+
+/* Media Query Start */
+
+@media only screen and (max-width: 600px) {
+  .form {
+    grid-template-columns: 1fr;
+  }
+
+  tbody td,
+  thead th {
+    font-size: 0.8rem;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .app {
+    padding: 1rem 0.5rem;
+  }
+  .full-profile {
+    width: 100%;
+  }
+
+  .form input,
+  .form select {
+    width: 60%;
+  }
+  .table-container {
+    width: 490px;
+    overflow-x: scroll;
+    margin-top: 20px;
+  }
+
+  tbody {
+    width: 100%;
+    overflow: scroll;
+  }
+
+  .full-form-container .btn {
+    margin-left: 1rem;
+  }
 }

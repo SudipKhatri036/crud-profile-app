@@ -1,4 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
+// import ProfileImage from "../components/ProfileImage";
+import Table from "../components/Table";
 
 function FullProfileList() {
   const location = useLocation();
@@ -11,38 +13,24 @@ function FullProfileList() {
       </button>
       <div className="profiles-container full-profile">
         <h1>Profiles</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>S.N</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Address</th>
-              <th>DoB</th>
-            </tr>
-          </thead>
-          <tbody>
-            {profiles.map((profile, index) => {
-              return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{profile.name}</td>
-                  <td>{profile.email}</td>
-                  <td>{profile.phoneNum}</td>
-                  <td>
-                    {profile.city || profile.district || profile.country
-                      ? `${profile.city || profile.district}  ${
-                          profile.country
-                        }`
-                      : "Not Available"}
-                  </td>
-                  <td>{profile.dob ? profile.dob : "Not Available"}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <Table>
+          {profiles.map((profile, index) => {
+            return (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{profile.name}</td>
+                <td>{profile.email}</td>
+                <td>{profile.phoneNum}</td>
+                <td>
+                  {profile.city || profile.district || profile.country
+                    ? `${profile.city || profile.district}  ${profile.country}`
+                    : "Not Available"}
+                </td>
+                <td>{profile.dob ? profile.dob : "Not Available"}</td>
+              </tr>
+            );
+          })}
+        </Table>
       </div>
     </div>
   );

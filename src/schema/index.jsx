@@ -2,7 +2,10 @@ import * as Yup from "yup";
 
 export const addProfileSchema = Yup.object({
   name: Yup.string()
-    .matches(/^[A-Za-z\s]+$/, "Name should contain only alphabets")
+    .matches(
+      /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/,
+      "Name should contain only alphabets and minumum 4 characters long"
+    )
     .required("Please enter you name"),
 
   phoneNum: Yup.number()
@@ -18,10 +21,7 @@ export const addProfileSchema = Yup.object({
 
   profile: Yup.mixed()
     .nullable()
-    .notRequired()
-    .test(
-      "FILE_FORMAT",
-      "Uploaded file has unsupported format.",
-      (value) => value && SUPPORTED_FORMATS.includes(value.type)
+    .test("FILE_FORMAT", "Only PNG images are allowed", (value) =>
+      value ? value.type === "image/png" : true
     ),
 });
