@@ -3,8 +3,8 @@ import SingleProfile from "./SingleProfile";
 import { useNavigate } from "react-router-dom";
 import Table from "./Table";
 
-function Profiles({ profileList, onSelectedInd, onDelete, onEdit }) {
-  const [pageNum, setPageNum] = useState(1);
+function Profiles({ profileList, onDelete, onEdit }) {
+  const [currentPageNum, setCurrentPageNum] = useState(1);
 
   const navigate = useNavigate();
   const toFullProfileList = () => {
@@ -13,42 +13,44 @@ function Profiles({ profileList, onSelectedInd, onDelete, onEdit }) {
 
   const maxItemsPerPage = 5;
   const totalPage = Math.ceil(profileList.length / maxItemsPerPage);
-  const start = (pageNum - 1) * maxItemsPerPage;
-  const end = pageNum * maxItemsPerPage;
+  const startIndex = (currentPageNum - 1) * maxItemsPerPage;
 
   const handleNext = () =>
-    pageNum < totalPage && setPageNum((page) => page + 1);
+    currentPageNum < totalPage && setCurrentPageNum((page) => page + 1);
 
-  const handlePrev = () => setPageNum((page) => page - 1);
+  const handlePrev = () => setCurrentPageNum((page) => page - 1);
 
   return (
     <div className="profiles-container">
       <h2>Profiles</h2>
 
-      <Table>
-        {[...profileList].slice(start, end).map((profile, index) => (
-          <SingleProfile
-            profile={profile}
-            key={index}
-            onDelete={onDelete}
-            onEdit={onEdit}
-            index={index}
-          />
-        ))}
+      <Table isFullPage={false}>
+        {[...profileList]
+          .slice(startIndex, startIndex + maxItemsPerPage)
+          .map((profile, index) => (
+            <SingleProfile
+              profile={profile}
+              key={index}
+              onDelete={onDelete}
+              onEdit={onEdit}
+              index={index}
+              startIndex={startIndex}
+              isFullPage={false}
+            />
+          ))}
       </Table>
 
       <div className="profile-btn-container">
-        <button className="btn">
-          <a
-            onClick={() => {
-              toFullProfileList();
-            }}
-          >
-            View Full List
-          </a>
+        <button
+          className="btn"
+          onClick={() => {
+            toFullProfileList();
+          }}
+        >
+          View Full List
         </button>
         <div>
-          {pageNum > 1 && (
+          {currentPageNum > 1 && (
             <button className="btn" onClick={handlePrev}>
               Prev
             </button>
@@ -56,10 +58,10 @@ function Profiles({ profileList, onSelectedInd, onDelete, onEdit }) {
           {profileList.length > 5 ? (
             <button
               className={`btn ${
-                totalPage > 1 && pageNum === totalPage && "disabled-btn"
+                totalPage > 1 && currentPageNum === totalPage && "disabled-btn"
               }`}
               onClick={handleNext}
-              disabled={pageNum == totalPage}
+              disabled={currentPageNum == totalPage}
             >
               Next
             </button>

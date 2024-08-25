@@ -1,6 +1,12 @@
-import { useEffect, useState } from "react";
+import { Flip, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import useProfileHandlers from "../hooks/useProfileHandler";
 import Form from "./Form";
 import Profiles from "./Profiles";
+
+// Data for Testing
+import testData from "./testData";
+// Data for Testing
 
 const initialState = {
   name: "",
@@ -15,50 +21,14 @@ const initialState = {
 };
 
 function App() {
-  const [profileList, setProfileList] = useState(function () {
-    const profileArr = JSON.parse(localStorage.getItem("profile-lists"));
-    return profileArr || [];
-  });
-  const [selectedFormState, setSelectedFormState] = useState(null);
-  const [editIndex, setEditIndex] = useState(null);
-
-  useEffect(
-    function () {
-      localStorage.setItem("profile-lists", JSON.stringify(profileList));
-    },
-    [profileList]
-  );
-
-  function handleSubmit(values, actions) {
-    if (editIndex !== null) {
-      let updatedProfileList = [...profileList];
-      updatedProfileList[editIndex] = values;
-      setProfileList(updatedProfileList);
-      setEditIndex(null);
-      setSelectedFormState(initialState);
-    } else {
-      setProfileList((prev) => [...prev, values]);
-    }
-
-    actions.resetForm({
-      values: {
-        ...initialState,
-      },
-    });
-  }
-
-  function handleDelete(index) {
-    const newProfileList = profileList.filter((_, i) => i !== index);
-    setProfileList(newProfileList);
-  }
-
-  function handleEdit(index) {
-    // if (selectedIndex >= 0) {
-    //   setSelectedFormState(profileList[index] || initialState);
-    // }
-    setSelectedFormState(profileList[index]);
-    setEditIndex(index);
-  }
+  const {
+    profileList,
+    setProfileList,
+    selectedFormState,
+    handleSubmit,
+    handleDelete,
+    handleEdit,
+  } = useProfileHandlers(testData);
 
   return (
     <div className="app">
@@ -81,6 +51,13 @@ function App() {
           ⛔No Profile Available! Add some profile first 🙂
         </h2>
       )}
+      <ToastContainer
+        position={"top-center"}
+        pauseOnHover={false}
+        theme={"dark"}
+        autoClose={2000}
+        transition={Flip}
+      />
     </div>
   );
 }

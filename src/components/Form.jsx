@@ -33,7 +33,7 @@ function Form({ initialState, onSubmit, selectedFormState }) {
             name="name"
             id="name"
             onChange={handleChange}
-            value={values.name}
+            value={values.name || ""}
             onBlur={handleBlur}
             className={errors.name && touched.name && "error-input"}
           />
@@ -53,7 +53,7 @@ function Form({ initialState, onSubmit, selectedFormState }) {
             name="phoneNum"
             id="phoneNum"
             onChange={handleChange}
-            value={values.phoneNum}
+            value={values.phoneNum || ""}
             onBlur={handleBlur}
             className={errors.phoneNum && touched.phoneNum && "error-input"}
           />
@@ -73,7 +73,7 @@ function Form({ initialState, onSubmit, selectedFormState }) {
             name="email"
             id="email"
             onChange={handleChange}
-            value={values.email}
+            value={values.email || ""}
             onBlur={handleBlur}
             className={errors.email && touched.email && "error-input"}
           />
@@ -90,7 +90,7 @@ function Form({ initialState, onSubmit, selectedFormState }) {
           name="dob"
           id="dob"
           onChange={handleChange}
-          value={values.dob}
+          value={values.dob || ""}
           onBlur={handleBlur}
         />
       </div>
@@ -103,7 +103,7 @@ function Form({ initialState, onSubmit, selectedFormState }) {
             name="city"
             id="city"
             onChange={handleChange}
-            value={values.city}
+            value={values.city || ""}
             onBlur={handleBlur}
           />
         </div>
@@ -117,7 +117,7 @@ function Form({ initialState, onSubmit, selectedFormState }) {
             name="district"
             id="district"
             onChange={handleChange}
-            value={values.district}
+            value={values.district || ""}
             onBlur={handleBlur}
           />
         </div>
@@ -130,13 +130,13 @@ function Form({ initialState, onSubmit, selectedFormState }) {
             name="province"
             id="province"
             onChange={handleChange}
-            value={values.province}
+            value={values.province || ""}
             onBlur={handleBlur}
           >
-            <option>Select</option>
+            <option value="">Select Province</option>
             {Array.from({ length: 7 }).map((_, i) => {
               return (
-                <option key={i} value="Province ${i + 1}">
+                <option key={i} value={`Province ${i + 1}`}>
                   Province {i + 1}
                 </option>
               );
@@ -151,7 +151,7 @@ function Form({ initialState, onSubmit, selectedFormState }) {
           name="country"
           id="country"
           onChange={handleChange}
-          value={values.country}
+          value={values.country || ""}
           onBlur={handleBlur}
         >
           {countries.length &&

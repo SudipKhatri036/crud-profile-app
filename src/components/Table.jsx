@@ -1,4 +1,4 @@
-function Table({ children }) {
+function Table({ children, isFullPage }) {
   return (
     <div className="table-container">
       <table>
@@ -9,7 +9,7 @@ function Table({ children }) {
             <th>Email</th>
             <th>Phone</th>
             <th>Address</th>
-            <th>Actions</th>
+            {isFullPage ? <th>DOB</th> : <th>Actions</th>}
           </tr>
         </thead>
         <tbody>{children}</tbody>

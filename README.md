@@ -44,6 +44,7 @@ Users should be able to:
 - YUP Validation
 - Axios
 - React Router DOM
+- React Toastify
 - React Icons
 - Flexbox
 - CSS Grid

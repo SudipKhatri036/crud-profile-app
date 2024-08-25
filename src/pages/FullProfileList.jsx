@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
-// import ProfileImage from "../components/ProfileImage";
 import Table from "../components/Table";
+import SingleProfile from "../components/SingleProfile";
 
 function FullProfileList() {
   const location = useLocation();
@@ -8,26 +8,20 @@ function FullProfileList() {
 
   return (
     <div className="full-profile-container">
-      <button className="btn">
-        <Link to={`/`}>Go back</Link>
-      </button>
+      <Link className="btn" to={"/"}>
+        Go back
+      </Link>
       <div className="profiles-container full-profile">
         <h1>Profiles</h1>
-        <Table>
+        <Table isFullPage={true}>
           {profiles.map((profile, index) => {
             return (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{profile.name}</td>
-                <td>{profile.email}</td>
-                <td>{profile.phoneNum}</td>
-                <td>
-                  {profile.city || profile.district || profile.country
-                    ? `${profile.city || profile.district}  ${profile.country}`
-                    : "Not Available"}
-                </td>
-                <td>{profile.dob ? profile.dob : "Not Available"}</td>
-              </tr>
+              <SingleProfile
+                key={index}
+                profile={profile}
+                index={index}
+                isFullPage={true}
+              />
             );
           })}
         </Table>

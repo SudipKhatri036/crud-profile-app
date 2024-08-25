@@ -14,6 +14,11 @@ export const addProfileSchema = Yup.object({
       "Number must be at least 7 digits",
       (value) => value && value.toString().length >= 7
     )
+    .test(
+      "startWith9",
+      "Number must start with 9",
+      (value) => value && value.toString().startsWith("9")
+    )
     .required("Please enter you number"),
   email: Yup.string()
     .email("Please enter valid email")
