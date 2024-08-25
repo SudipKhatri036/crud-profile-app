@@ -78,7 +78,7 @@ function App() {
         />
       ) : (
         <h2 className="not-available-msg">
-          ⛔No Profile Available! Add prfoile first 🙂
+          ⛔No Profile Available! Add some profile first 🙂
         </h2>
       )}
     </div>
